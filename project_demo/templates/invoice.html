@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="layout">
+
+    <div class="sidebar">
+        <h2>Beverage ERP</h2>
+        <a href="/">Dashboard</a>
+        <a href="/products">Products</a>
+        <a href="/invoice">Invoice</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <h1>Create Invoice</h1>
+
+            <form method="POST" action="/download_invoice">
+                <input type="text" name="customer_name" placeholder="Customer Name" required>
+                <input type="text" name="product_name" placeholder="Product Name" required>
+                <input type="number" name="quantity" placeholder="Quantity" required>
+                <input type="number" step="0.01" name="rate" placeholder="Rate" required>
+
+                <button type="submit">Download PDF Invoice</button>
+            </form>
+
+            {% if invoice %}
+            <hr>
+            <h2>Invoice</h2>
+            <p><b>Date:</b> {{ invoice.invoice_date }}</p>
+            <p><b>Customer:</b> {{ invoice.customer_name }}</p>
+            <p><b>Product:</b> {{ invoice.product_name }}</p>
+            <p><b>Quantity:</b> {{ invoice.quantity }}</p>
+            <p><b>Rate:</b> ₹ {{ invoice.rate }}</p>
+            <p><b>Total:</b> ₹ {{ invoice.total }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

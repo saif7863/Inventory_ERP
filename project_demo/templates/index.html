@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Beverage ERP Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Beverage ERP</h2>
+
+        <a href="/">Dashboard</a>
+        <a href="/sales">Sales</a>
+        <a href="/products">Products</a>
+        <a href="/invoice">Invoice</a>
+
+        {% if session['role'] == 'admin' %}
+            <a href="/export">Export Excel</a>
+        {% endif %}
+
+        <a href="/logout">Logout</a>
+
+
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- Topbar -->
+        <div class="topbar">
+            <div>
+                <h2>Beverage ERP Dashboard</h2>
+                <p>{{ current_date }}</p>
+            </div>
+
+            <div class="user-box">
+                <span>👤 {{ session['username'] }}</span>
+                <span>|</span>
+                <span>Role: {{ session['role'] }}</span>
+                <a href="/logout">
+                    <button class="logout-btn">Logout</button>
+                </a>
+            </div>
+        </div>
+
+        <!-- Dashboard Cards -->
+        <div class="dashboard">
+            <div class="card">
+                <h3>Total Products</h3>
+                <p>{{ total_products }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Total Stock</h3>
+                <p>{{ total_stock }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Low Stock</h3>
+                <p>{{ low_stock_count }}</p>
+            </div>
+            <div class="card">
+                <h3>Estimated Profit</h3>
+                <p>₹ {{ profit }}</p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

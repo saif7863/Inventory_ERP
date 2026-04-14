@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Beverage ERP</h2>
+        <a href="/">Dashboard</a>
+        <a href="/sales">Sales</a>
+        <a href="/export_sales">Export Sales</a>
+
+        {% if session['role'] == 'admin' %}
+            <a href="/export">Export Excel</a>
+        {% endif %}
+
+        <a href="/logout">Logout</a>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-content">
+
+        <div class="topbar">
+            <div>
+                <h2>Sales Management</h2>
+                <p>Track customer sales and invoices</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <h1>Add Sale</h1>
+
+            <form method="POST">
+                <input type="text" name="customer_name" placeholder="Customer Name" required>
+                <input type="text" name="product_name" placeholder="Product Name" required>
+                <input type="number" name="quantity" placeholder="Quantity" required>
+                <button type="submit">Add Sale</button>
+            </form>
+
+            <hr>
+
+            <h2>Sales History</h2>
+            <a href="/export_sales">
+               <button>Download Sales Excel</button>
+            </a>
+
+            <table>
+                <tr>
+                    <th>Invoice</th>
+                    <th>Customer</th>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Date</th>
+                </tr>
+
+                {% for sale in sales %}
+                <tr>
+                    <td>{{ sale[1] }}</td>
+                    <td>{{ sale[2] }}</td>
+                    <td>{{ sale[3] }}</td>
+                    <td>{{ sale[4] }}</td>
+                    <td>{{ sale[5] }}</td>
+                    <td>{{ sale[6] }}</td>
+                    <td>{{ sale[7] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

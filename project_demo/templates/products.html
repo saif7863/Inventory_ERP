@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Beverage ERP</h2>
+
+        <a href="/">Dashboard</a>
+        <a href="/products">Products</a>
+        <a href="/invoice">Invoice</a>
+
+        {% if session['role'] == 'admin' %}
+            <a href="/export">Export Excel</a>
+        {% endif %}
+
+        <a href="/logout">Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <div class="topbar">
+            <h2>Product Management</h2>
+        </div>
+
+        <div class="container">
+
+            <h1>Add Beverage Product</h1>
+
+            <form method="POST">
+                <input type="text" name="product_name" placeholder="Product Name" required>
+                <input type="text" name="category" placeholder="Category" required>
+                <input type="number" name="quantity" placeholder="Quantity" required>
+                <input type="number" step="0.01" name="buy_price" placeholder="Buy Price" required>
+                <input type="number" step="0.01" name="sell_price" placeholder="Sell Price" required>
+                <input type="text" name="supplier" placeholder="Supplier" required>
+
+                <button type="submit">Add Product</button>
+            </form>
+
+            <h2>Search Product</h2>
+
+            <form method="GET">
+                <input type="text" name="search" placeholder="Search product">
+                <button type="submit">Search</button>
+            </form>
+
+            <h2>Inventory Table</h2>
+
+            <table border="1" cellpadding="10">
+                <tr>
+                    <th>Date</th>
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Qty</th>
+                    <th>Buy</th>
+                    <th>Sell</th>
+                    <th>Supplier</th>
+                    <th>Action</th>
+                </tr>
+
+                {% for product in products %}
+                <tr>
+                    <td>{{ product[7] }}</td>
+                    <td>{{ product[0] }}</td>
+                    <td>{{ product[1] }}</td>
+                    <td>{{ product[2] }}</td>
+                    <td>
+                        {{ product[3] }}
+                        {% if product[3] <= 5 %}
+                            ⚠️ Low Stock
+                        {% endif %}
+                    </td>
+                    <td>{{ product[4] }}</td>
+                    <td>{{ product[5] }}</td>
+                    <td>{{ product[6] }}</td>
+                    <td>
+                         <div class="action-buttons">
+                            {% if session['role'] == 'admin' %}
+                                 <a href="/delete/{{ product[0] }}" class="btn-delete">Delete</a>
+                            {% endif %}
+                             <a href="/edit/{{ product[0] }}" class="btn-edit">Edit</a>
+                             <a href="/stock_in/{{ product[0] }}" class="btn-in">IN</a>
+                             <a href="/stock_out/{{ product[0] }}" class="btn-out">OUT</a>
+                         </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

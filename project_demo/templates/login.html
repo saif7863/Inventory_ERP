@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - Beverage ERP</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login-body">
+
+    <div class="login-wrapper">
+        <div class="login-card">
+            <h1>Beverage ERP</h1>
+            <p>Please login to continue</p>
+
+            <form method="POST">
+                <input type="text" name="username" placeholder="Enter username" required>
+                <input type="password" name="password" placeholder="Enter password" required>
+
+                <button type="submit">Login</button>
+                <a href="/forgot_password">Forgot Password?</a>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
